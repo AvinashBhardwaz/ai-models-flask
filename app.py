@@ -116,7 +116,7 @@ def predict_ipl():
         win = result[0][1]   # Probability of winning
 
         return render_template(
-            'IPL_WIN.html',
+            'ipl_win.html',
             teams=sorted(ipl_teams),
             cities=sorted(ipl_cities),
             prediction_text=f'{batting_team} - {round(win * 100)}% | {bowling_team} - {round(loss * 100)}%',
