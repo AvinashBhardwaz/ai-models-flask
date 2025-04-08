@@ -6,21 +6,31 @@ import string
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
+import os
 
 app = Flask(__name__)
 
-ps = PorterStemmer()
+# Ensure paths work on both Windows & Linux
+models_path = "models"
 
 # Load models
-ipl_pipe = pickle.load(open("models\ipl_model.pkl", "rb"))  # IPL Win Predictor Model
-score_pipe = pickle.load(open("models\score_pipe.pkl", "rb"))  # T20 Score Predictor Model
-movies = pickle.load(open('models\movie_list.pkl', 'rb'))       # Movie 
-similarity = pickle.load(open('models\similarity.pkl', 'rb'))   #Similarity Score
+ipl_pipe = pickle.load(open(os.path.join(models_path, "ipl_model.pkl"), "rb"))  # IPL Win Predictor Model
+score_pipe = pickle.load(open(os.path.join(models_path, "score_pipe.pkl"), "rb"))  # T20 Score Predictor Model
+movies = pickle.load(open(os.path.join(models_path, "movie_list.pkl"), "rb"))  # Movie Recommender
+similarity = pickle.load(open(os.path.join(models_path, "similarity.pkl"), "rb"))  # Similarity Score
+
+ps = PorterStemmer()
+
+# # Load models
+# ipl_pipe = pickle.load(open("models\ipl_model.pkl", "rb"))  # IPL Win Predictor Model
+# score_pipe = pickle.load(open("models\score_pipe.pkl", "rb"))  # T20 Score Predictor Model
+# movies = pickle.load(open('models\movie_list.pkl', 'rb'))       # Movie 
+# similarity = pickle.load(open('models\similarity.pkl', 'rb'))   #Similarity Score
 
 try:
     # Load the trained model and vectorizer
-    text_vectorizer = pickle.load(open('models/vectorizer.pkl', 'rb'))
-    spam_classifier_model = pickle.load(open('models/spam_classifier.pkl', 'rb'))
+    text_vectorizer = pickle.load(open(os.path.join(models_path, "vectorizer.pkl"), "rb"))
+    spam_classifier_model = pickle.load(open(os.path.join(models_path, "spam_classifier.pkl"), "rb"))
 except Exception as e:
     print(f"Error loading model or vectorizer: {e}")
     text_vectorizer, spam_classifier_model = None, None
