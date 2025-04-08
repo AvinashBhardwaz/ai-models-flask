@@ -8,9 +8,10 @@ from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 import os
 
-nltk.download('punkt')
-
 app = Flask(__name__)
+
+nltk.download('punkt')
+nltk.download('stopwords')
 
 # Ensure paths work on both Windows & Linux
 models_path = "models"
@@ -31,8 +32,8 @@ ps = PorterStemmer()
 
 try:
     # Load the trained model and vectorizer
-    text_vectorizer = pickle.load(open(os.path.join(models_path, "vectorizer.pkl"), "rb"))
-    spam_classifier_model = pickle.load(open(os.path.join(models_path, "spam_classifier.pkl"), "rb"))
+    text_vectorizer = pickle.load(open('models/vectorizer.pkl', 'rb'))
+    spam_classifier_model = pickle.load(open('models/spam_classifier.pkl', 'rb'))
 except Exception as e:
     print(f"Error loading model or vectorizer: {e}")
     text_vectorizer, spam_classifier_model = None, None
