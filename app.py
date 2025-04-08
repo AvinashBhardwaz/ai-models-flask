@@ -8,6 +8,8 @@ from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 import os
 
+nltk.download('punkt')
+
 app = Flask(__name__)
 
 # Ensure paths work on both Windows & Linux
