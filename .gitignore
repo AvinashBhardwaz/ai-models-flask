@@ -16,9 +16,6 @@ __pycache__/
 pip-log.txt
 pip-delete-this-directory.txt
 
-# Ignore machine learning models (if they are large and can be regenerated)
-models/
-
 # Ignore static cache files
 static/*.cache
 
