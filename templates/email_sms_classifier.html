@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email/SMS Spam Classifier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        textarea, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .btn-predict {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-predict:hover {
+            background-color: #0056b3;
+        }
+        .btn-reset {
+            background-color: #ffc107;
+            color: black;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-reset:hover {
+            background-color: #e0a800;
+        }
+        .btn-back {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+            border-radius: 5px;
+        }
+        .btn-back:hover {
+            background-color: #a71d2a;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Email/SMS Spam Classifier</h2>
+        
+        <form method="POST" action="{{ url_for('classify_message') }}">
+            <label for="message">Enter Message:</label><br>
+            <textarea id="message" name="message" rows="4" cols="50" required>{{ input_message }}</textarea><br>
+            <button type="submit" class="btn-predict">Predict</button>
+            <button type="button" class="btn-reset" onclick="document.getElementById('message').value=''">Reset</button>
+        </form>
+
+        <a href="/" class="btn-back">Back to Home</a>
+
+        {% if prediction %}
+        <h3>Prediction: {{ prediction }}</h3>
+        {% endif %}
+    </div>
+</body>
+</html>

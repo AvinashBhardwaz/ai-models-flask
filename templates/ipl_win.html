@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IPL Win Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 50px;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+        }
+        .form-container select, input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 20px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .form-container input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+        .form-container input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .button-container button {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 48%;
+        }
+        .reset-button {
+            background-color: #f44336;
+            color: white;
+        }
+        .reset-button:hover {
+            background-color: #d32f2f;
+        }
+        .home-button {
+            background-color: #2196F3;
+            color: white;
+        }
+        .home-button:hover {
+            background-color: #1976D2;
+        }
+        .result {
+            font-size: 1.5em;
+            color: #4CAF50;
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2 style="text-align: center;">IPL Win Predictor</h2>
+        <form action="/predict_ipl" method="post">
+            <label for="batting_team">Batting Team:</label>
+            <select name="batting_team">
+                {% for team in teams %}
+                <option value="{{ team }}" {% if prev_inputs and prev_inputs.batting_team == team %} selected {% endif %}>{{ team }}</option>
+                {% endfor %}
+            </select>
+        
+            <label for="bowling_team">Bowling Team:</label>
+            <select name="bowling_team">
+                {% for team in teams %}
+                <option value="{{ team }}" {% if prev_inputs and prev_inputs.bowling_team == team %} selected {% endif %}>{{ team }}</option>
+                {% endfor %}
+            </select>
+        
+            <label for="city">City:</label>
+            <select name="city">
+                {% for city in cities %}
+                <option value="{{ city }}" {% if prev_inputs and prev_inputs.city == city %} selected {% endif %}>{{ city }}</option>
+                {% endfor %}
+            </select>
+        
+            <label for="target">Target:</label>
+            <input type="number" name="target" value="{{ prev_inputs.target if prev_inputs else '' }}">
+        
+            <label for="score">Score:</label>
+            <input type="number" name="score" value="{{ prev_inputs.score if prev_inputs else '' }}">
+        
+            <label for="overs">Overs:</label>
+            <input type="number" name="overs" value="{{ prev_inputs.overs if prev_inputs else '' }}">
+        
+            <label for="wickets">Wickets:</label>
+            <input type="number" name="wickets" value="{{ prev_inputs.wickets if prev_inputs else '' }}">
+        
+            <input type="submit" value="Predict">
+        </form>
+
+        <div class="button-container">
+            <button class="reset-button" type="button" onclick="resetForm()">Reset</button>
+            <button class="home-button" onclick="window.location.href='/'">Back to Home</button>
+        </div>
+
+        <script>
+            function resetForm() {
+                document.querySelector(".form-container form").reset();
+            }
+        </script>
+        
+        {% if prediction_text %}
+        <h3>Prediction: {{ prediction_text }}</h3>
+        {% endif %}
+    </div>
+</body>
+</html>

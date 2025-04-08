@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommender System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        select, button {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+        .btn-recommend {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-recommend:hover {
+            background-color: #0056b3;
+        }
+        .btn-back {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            text-decoration: none;
+            padding: 10px 20px;
+            display: inline-block;
+            border-radius: 5px;
+        }
+        .btn-back:hover {
+            background-color: #a71d2a;
+        }
+        .movie-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .movie-card {
+            width: 150px;
+            text-align: center;
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .movie-card img {
+            width: 100%;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Movie Recommender System</h2>
+        
+        <form method="POST" action="{{ url_for('recommend_movies') }}">
+            <label for="movie">Select a Movie:</label>
+            <select id="movie" name="movie" required>
+                <option value="" disabled selected>-- Choose a movie --</option>
+                {% for movie in movie_list %}
+                    <option value="{{ movie }}" {% if selected_movie == movie %}selected{% endif %}>{{ movie }}</option>
+                {% endfor %}
+            </select>
+            <button type="submit" class="btn-recommend">Recommend</button>
+        </form>
+
+        <a href="/" class="btn-back">Back to Home</a>
+
+        {% if recommendations %}
+        <h3>Recommended Movies</h3>
+        <div class="movie-grid">
+            {% for movie in recommendations %}
+            <div class="movie-card">
+                <img src="{{ movie.poster }}" alt="{{ movie.name }}">
+                <p>{{ movie.name }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
